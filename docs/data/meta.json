@@ -1,0 +1,15 @@
+{
+  "updated_at": "2025-12-24 18:11:41",
+  "range_from": "20244",
+  "range_to": "20253",
+  "zoom": 13,
+  "h3_resolution": 9,
+  "priceClassification": "01",
+  "landTypeCode": "01,02",
+  "bbox": {
+    "min_lat": 35.45,
+    "min_lon": 139.55,
+    "max_lat": 35.9,
+    "max_lon": 139.95
+  }
+}
