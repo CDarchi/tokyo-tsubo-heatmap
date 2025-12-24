@@ -6,31 +6,20 @@ header {
 }
 #map { height: calc(100% - 72px); }
 
-#legend{
-  position: absolute;
-  right: 12px;
-  bottom: 12px;
-  background: rgba(255,255,255,0.9);
-  border: 1px solid #ddd;
-  padding: 10px 10px;
-  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-  font-size: 12px;
-  line-height: 1.2;
-  border-radius: 10px;
-}
+#legend
 .legend-row{ display:flex; align-items:center; gap:8px; margin:4px 0; }
 .swatch{ width:14px; height:14px; border:1px solid rgba(0,0,0,0.15); }
 /* --- legend を地図の上に固定表示 --- */
 #map { position: relative; }
 
 #legend {
-  position: absolute;
-  right: 12px;
-  bottom: 12px;
-  z-index: 9999 !important;
-  background: rgba(255,255,255,0.92);
-  padding: 10px 12px;
-  border-radius: 10px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.18);
-  pointer-events: auto;
+  position: fixed !important;
+  right: 12px !important;
+  bottom: 12px !important;
+  z-index: 999999 !important;
+  background: rgba(255,255,255,0.92) !important;
+  padding: 10px 12px !important;
+  border-radius: 10px !important;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.18) !important;
+  pointer-events: auto !important;
 }
