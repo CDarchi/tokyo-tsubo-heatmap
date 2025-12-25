@@ -76,7 +76,7 @@ function makeLegend(minV, maxV) {
 (async () => {
   const map = L.map("map").setView([35.68, 139.76], 11);
 
-  L.tileLayer("https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png", {
+  L.tileLayer("https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png", {
     maxZoom: 18,
     attribution: "地理院タイル",
     className: "basemap",
