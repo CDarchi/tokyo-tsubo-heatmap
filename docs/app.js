@@ -79,6 +79,7 @@ function makeLegend(minV, maxV) {
   L.tileLayer("https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png", {
     maxZoom: 18,
     attribution: "地理院タイル",
+    className: "basemap",
   }).addTo(map);
 
  // const meta = await loadJSON("./data/meta.json");
@@ -111,11 +112,13 @@ function makeLegend(minV, maxV) {
     const t = (v - minV) / denom;
 
     return {
-      color: "rgba(0,0,0,0.15)",
-      weight: 1,
+      color: "rgba(255,255,255,0.85)", // 白い縁取り
+      weight: 1.2,
+      opacity: 1.0,
       fillColor: colorScale(t),
-      fillOpacity: 0.45,
-    };
+      fillOpacity: 0.62,              // 少し濃く
+      lineJoin: "round",
+};
   }
 
   const layer = L.geoJSON(gj, {

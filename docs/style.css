@@ -23,3 +23,7 @@ header {
   box-shadow: 0 2px 12px rgba(0,0,0,0.18) !important;
   pointer-events: auto !important;
 }
+/* 背景地図を落ち着かせて、六角形を主役にする */
+.leaflet-tile.basemap {
+  filter: grayscale(1) brightness(1.12) contrast(0.92) saturate(0.65);
+}
