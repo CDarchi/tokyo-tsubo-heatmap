@@ -102,24 +102,25 @@ function makeLegend(minV, maxV) {
   const maxV = quantile(values, 0.95);
   makeLegend(minV, maxV);
 
-  function styleFn(feature) {
-    let v = feature.properties.p_med_tsubo;
+function styleFn(feature) {
+  let v = feature.properties.p_med_tsubo;
 
-    // 範囲外は端に丸める（＝外れ値は同じ色になる）
-    v = Math.max(minV, Math.min(maxV, v));
+  // 範囲外は端に丸める（＝外れ値は同じ色になる）
+  v = Math.max(minV, Math.min(maxV, v));
 
-    const denom = (maxV - minV) + 1e-9;
-    const t = (v - minV) / denom;
+  const denom = (maxV - minV) + 1e-9;
+  const t = (v - minV) / denom;
 
-    return {
-      color: "rgba(255,255,255,0.85)", // 白い縁取り
-      weight: 1.2,
-      opacity: 1.0,
-      fillColor: colorScale(t),
-      fillOpacity: 0.70,              // 少し濃く
-      lineJoin: "round",
+  return {
+  color: "rgba(255,255,255,0.9)",  // 縁を白で少し強く
+  weight: 1.3,
+  opacity: 0.95,
+  fillColor: colorScale(t),
+  fillOpacity: 0.75,              // 中身も少し濃く
+  lineJoin: "round",
 };
-  }
+
+}
 
   const layer = L.geoJSON(gj, {
     style: styleFn,
