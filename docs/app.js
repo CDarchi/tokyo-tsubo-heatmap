@@ -12,6 +12,19 @@ function colorScale(t) {
   return `rgb(${r},${g},${b})`;
 }
 
+// q=0.05 なら「下位5%」の値を返す（だいたいの境界値）
+function quantile(sortedValues, q) {
+  const n = sortedValues.length;
+  if (n === 0) return NaN;
+  if (n === 1) return sortedValues[0];
+  const pos = (n - 1) * q;
+  const base = Math.floor(pos);
+  const rest = pos - base;
+  const a = sortedValues[base];
+  const b = sortedValues[Math.min(base + 1, n - 1)];
+  return a + (b - a) * rest;
+}
+
 function makeLegend(minV, maxV) {
   const legend = document.getElementById("legend");
   legend.innerHTML = `
@@ -20,7 +33,10 @@ function makeLegend(minV, maxV) {
     <div class="legend-row"><span class="swatch" style="background:${colorScale(0.5)}"></span>中</div>
     <div class="legend-row"><span class="swatch" style="background:${colorScale(1)}"></span>高</div>
     <div style="margin-top:6px; color:#444;">
-      範囲：${Math.round(minV).toLocaleString()} 〜 ${Math.round(maxV).toLocaleString()}
+      表示範囲（外れ値カット）：${Math.round(minV).toLocaleString()} 〜 ${Math.round(maxV).toLocaleString()}
+    </div>
+    <div style="margin-top:4px; color:#666; font-size:12px;">
+      ※ 下位5%・上位5%は同じ色に丸めています
     </div>
   `;
 }
@@ -41,15 +57,23 @@ function makeLegend(minV, maxV) {
 
   const values = gj.features
     .map(f => f.properties?.p_med_tsubo)
-    .filter(v => typeof v === "number" && isFinite(v));
+    .filter(v => typeof v === "number" && isFinite(v))
+    .sort((a, b) => a - b);
 
-  const minV = Math.min(...values);
-  const maxV = Math.max(...values);
+  // 外れ値カット：下位5%〜上位95%の範囲で色付けする
+  const minV = quantile(values, 0.05);
+  const maxV = quantile(values, 0.95);
   makeLegend(minV, maxV);
 
   function styleFn(feature) {
-    const v = feature.properties.p_med_tsubo;
-    const t = (v - minV) / (maxV - minV + 1e-9);
+    let v = feature.properties.p_med_tsubo;
+
+    // 範囲外は端に丸める（＝外れ値は同じ色になる）
+    v = Math.max(minV, Math.min(maxV, v));
+
+    const denom = (maxV - minV) + 1e-9;
+    const t = (v - minV) / denom;
+
     return {
       color: "rgba(0,0,0,0.15)",
       weight: 1,
