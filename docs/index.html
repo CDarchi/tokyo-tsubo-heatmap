@@ -3,22 +3,31 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tokyo 坪単価ヒートマップ</title>
+  <title>東京エリア 坪単価マップ（不動産取引データ）</title>
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-  <link rel="stylesheet" href="style.css?v=7" />
+  <link rel="stylesheet" href="style.css?v=8" />
 </head>
+
 <body>
   <header>
-    <h1>Tokyo 坪単価ヒートマップ</h1>
+    <h1>東京エリア 坪単価マップ（不動産取引データ）</h1>
+
+    <p id="desc">
+      国の公開データ（不動産取引）をもとに、東京エリアの土地価格を<strong>坪単価（中央値）</strong>でまとめて地図に表示しています。<br />
+      <strong>赤いほど高く、青いほど低い</strong>傾向です。クリックすると、その場所の<strong>坪単価（中央値）</strong>と<strong>取引件数</strong>が見られます。<br />
+      地図は、エリアごとに同じ大きさの<strong>区画</strong>に分けて色を付けています。<br />
+      さらに、ごく一部の<strong>極端に高い／安い取引</strong>に引っ張られないよう、上下の端の値は同じ色にまとめて表示しています。
+    </p>
+
     <div id="meta">読み込み中...</div>
   </header>
 
   <div id="map"></div>
   <div id="legend"></div>
 
-  <script src="app.js?v=7"></script>
+  <script src="app.js?v=8"></script>
 </body>
 </html>

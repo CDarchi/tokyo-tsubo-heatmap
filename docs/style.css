@@ -1,34 +1,70 @@
-﻿/* TEST_20251225_A */
+﻿/* site base */
 html, body { height: 100%; margin: 0; }
-header {
-  padding: 10px 12px;
-  border-bottom: 1px solid #ddd;
+body{
+  display: flex;
+  flex-direction: column;
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: #fff;
 }
-#map { height: calc(100% - 96px); }
 
-#legend
+/* header */
+header{
+  padding: 16px 16px 12px;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+header h1{
+  margin: 0 0 8px;
+  font-size: 30px;
+  letter-spacing: 0.02em;
+}
+
+#desc{
+  margin: 0 0 10px;
+  max-width: 980px;
+  color: rgba(0,0,0,0.72);
+  font-size: 14px;
+  line-height: 1.7;
+}
+#desc strong{
+  color: rgba(0,0,0,0.88);
+  font-weight: 700;
+}
+
+#meta{
+  color: rgba(0,0,0,0.70);
+  font-size: 13px;
+}
+
+/* map: header分を引かずに、自動で残り全部を地図にする */
+#map{
+  flex: 1;
+  min-height: 360px;
+}
+
+/* legend */
 .legend-row{ display:flex; align-items:center; gap:8px; margin:4px 0; }
 .swatch{ width:14px; height:14px; border:1px solid rgba(0,0,0,0.15); }
-/* --- legend を地図の上に固定表示 --- */
-#map { position: relative; }
 
-#legend {
+#legend{
   position: fixed !important;
   right: 12px !important;
   bottom: 12px !important;
   z-index: 999999 !important;
   background: rgba(255,255,255,0.92) !important;
   padding: 10px 12px !important;
-  border-radius: 10px !important;
+  border-radius: 12px !important;
   box-shadow: 0 2px 12px rgba(0,0,0,0.18) !important;
   pointer-events: auto !important;
 }
-/* 背景地図だけ落ち着かせて、六角形を主役にする（Leaflet tileに basemap が付く） */
-/* 背景地図を落ち着かせて、六角形を主役にする（TileLayerのclassName="basemap"に効かせる） */
-.leaflet-layer.basemap {
+
+/* basemap: 文字・道路は残しつつ、色味だけ落ち着かせる（六角形が主役になる） */
+.leaflet-layer.basemap{
   filter: grayscale(1) brightness(1.10) contrast(0.85) saturate(0.35);
   opacity: 0.95;
 }
-
-
