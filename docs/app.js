@@ -116,7 +116,7 @@ function makeLegend(minV, maxV) {
       weight: 1.2,
       opacity: 1.0,
       fillColor: colorScale(t),
-      fillOpacity: 0.62,              // 少し濃く
+      fillOpacity: 0.70,              // 少し濃く
       lineJoin: "round",
 };
   }
