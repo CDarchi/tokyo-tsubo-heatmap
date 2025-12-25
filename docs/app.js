@@ -1,26 +1,33 @@
-﻿// ---- meta.json を読み込んで上の表示を更新する ----
-fetch("./data/meta.json")
+﻿// --- 画面上の「最終更新/取引点数/六角形数」を管理する ---
+const META_UI = { updated: null, points: null, hexes: null };
+
+function renderMeta() {
+  const el = document.getElementById("meta");
+  if (!el) return;
+
+  const parts = [];
+  parts.push(`最終更新: ${META_UI.updated ?? "読み込み中…"}`);
+  if (META_UI.points != null) parts.push(`取引点数: ${Number(META_UI.points).toLocaleString()}`);
+  if (META_UI.hexes != null) parts.push(`六角形: ${Number(META_UI.hexes).toLocaleString()}`);
+
+  el.textContent = parts.join(" / ");
+}
+renderMeta();
+
+// meta.json を読んで「最終更新」を埋める（points/hexes が無くてもOK）
+fetch("./data/meta.json", { cache: "no-store" })
   .then(r => r.json())
   .then(meta => {
-    const el = document.getElementById("meta");
-    if (!el) return;
-
-    // meta.json のキー名が違っても壊れにくい書き方
-    const updated = meta.updated_at || meta.updated || meta.date || meta.generated_at || "不明";
-    const points  = meta.points || meta.point_count || meta.n_points;
-    const hexes   = meta.hexes || meta.hex_count || meta.n_hexes;
-
-    const parts = [];
-    parts.push(`最終更新: ${updated}`);
-    if (points != null) parts.push(`取引点数: ${points}`);
-    if (hexes != null) parts.push(`六角形: ${hexes}`);
-
-    el.textContent = parts.join(" / ");
+    META_UI.updated = meta.updated_at || meta.updated || meta.date || meta.generated_at || "不明";
+    renderMeta();
   })
   .catch(() => {
-    const el = document.getElementById("meta");
-    if (el) el.textContent = "読み込み中…（meta取得失敗）";
+    // 失敗しても地図は動かす。表示だけ注意書きにする
+    META_UI.updated = "不明（meta取得失敗）";
+    renderMeta();
   });
+// ---------------------------------------------------------
+
 // ----------------------------------------------
 
 async function loadJSON(path) {
@@ -74,11 +81,15 @@ function makeLegend(minV, maxV) {
     attribution: "地理院タイル",
   }).addTo(map);
 
-  const meta = await loadJSON("./data/meta.json");
-  document.getElementById("meta").textContent =
-    `更新: ${meta.updated_at} / 期間: ${meta.range_from}〜${meta.range_to}`;
+ // const meta = await loadJSON("./data/meta.json");
+ // document.getElementById("meta").textContent =
+ //  `更新: ${meta.updated_at} / 期間: ${meta.range_from}〜${meta.range_to}`;
 
   const gj = await loadJSON("./data/latest.geojson");
+
+  META_UI.hexes = gj.features?.length ?? 0;
+  META_UI.points = (gj.features ?? []).reduce((s, f) => s + (Number(f?.properties?.p_count) || 0), 0);
+  renderMeta();
 
   const values = gj.features
     .map(f => f.properties?.p_med_tsubo)
