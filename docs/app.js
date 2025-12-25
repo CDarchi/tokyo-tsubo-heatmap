@@ -1,4 +1,29 @@
-﻿async function loadJSON(path) {
+﻿// ---- meta.json を読み込んで上の表示を更新する ----
+fetch("./data/meta.json")
+  .then(r => r.json())
+  .then(meta => {
+    const el = document.getElementById("meta");
+    if (!el) return;
+
+    // meta.json のキー名が違っても壊れにくい書き方
+    const updated = meta.updated_at || meta.updated || meta.date || meta.generated_at || "不明";
+    const points  = meta.points || meta.point_count || meta.n_points;
+    const hexes   = meta.hexes || meta.hex_count || meta.n_hexes;
+
+    const parts = [];
+    parts.push(`最終更新: ${updated}`);
+    if (points != null) parts.push(`取引点数: ${points}`);
+    if (hexes != null) parts.push(`六角形: ${hexes}`);
+
+    el.textContent = parts.join(" / ");
+  })
+  .catch(() => {
+    const el = document.getElementById("meta");
+    if (el) el.textContent = "読み込み中…（meta取得失敗）";
+  });
+// ----------------------------------------------
+
+async function loadJSON(path) {
   const r = await fetch(path, { cache: "no-store" });
   if (!r.ok) throw new Error(`fetch failed: ${path} ${r.status}`);
   return await r.json();
