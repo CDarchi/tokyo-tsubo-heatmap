@@ -1,4 +1,5 @@
-﻿html, body { height: 100%; margin: 0; }
+﻿/* TEST_20251225_A */
+html, body { height: 100%; margin: 0; }
 header {
   padding: 10px 12px;
   border-bottom: 1px solid #ddd;
@@ -24,8 +25,10 @@ header {
   pointer-events: auto !important;
 }
 /* 背景地図だけ落ち着かせて、六角形を主役にする（Leaflet tileに basemap が付く） */
-.leaflet-tile.basemap {
+/* 背景地図を落ち着かせて、六角形を主役にする（TileLayerのclassName="basemap"に効かせる） */
+.leaflet-layer.basemap {
   filter: grayscale(1) brightness(1.10) contrast(0.85) saturate(0.35);
   opacity: 0.95;
 }
+
 
