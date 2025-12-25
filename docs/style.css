@@ -4,23 +4,34 @@
 body { display: flex; flex-direction: column; }
 
 header {
-  padding: 10px 12px;
+  padding: 14px 16px;
   border-bottom: 1px solid #ddd;
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
+header h1{
+  margin: 0 0 6px;
+  font-size: 34px;
+  letter-spacing: 0.2px;
+}
+
 #desc{
-  margin: 6px 0 8px;
+  margin: 0 0 10px;
   max-width: 980px;
   line-height: 1.7;
   color: rgba(0,0,0,0.72);
   font-size: 14px;
 }
-#desc strong{ font-weight: 700; }
+#desc strong{ font-weight: 700; color: rgba(0,0,0,0.86); }
 
-#map { flex: 1; }  /* ←これでOK */
+#meta{
+  color: rgba(0,0,0,0.7);
+  font-size: 14px;
+}
 
-/* 凡例を地図上に固定 */
+#map { flex: 1; min-height: 420px; }
+
+/* 凡例を地図の上に固定 */
 #legend { position: relative; }
 #legend {
   position: fixed !important;
@@ -29,14 +40,14 @@ header {
   z-index: 999999 !important;
   background: rgba(255,255,255,0.92) !important;
   padding: 10px 12px !important;
-  border-radius: 10px !important;
+  border-radius: 12px !important;
   box-shadow: 0 2px 12px rgba(0,0,0,0.18) !important;
   pointer-events: auto !important;
 }
 .legend-row{ display:flex; align-items:center; gap:8px; margin:4px 0; }
 .swatch{ width:14px; height:14px; border:1px solid rgba(0,0,0,0.15); }
 
-/* 背景地図を落ち着かせる（六角形を主役に） */
+/* 背景地図を落ち着かせて、六角形を主役にする */
 .leaflet-layer.basemap{
   filter: grayscale(1) brightness(1.10) contrast(0.85) saturate(0.35);
   opacity: 0.95;
