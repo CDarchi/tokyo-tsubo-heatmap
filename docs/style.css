@@ -4,7 +4,7 @@ header {
   border-bottom: 1px solid #ddd;
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
 }
-#map { height: calc(100% - 72px); }
+#map { height: calc(100% - 96px); }
 
 #legend
 .legend-row{ display:flex; align-items:center; gap:8px; margin:4px 0; }
