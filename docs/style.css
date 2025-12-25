@@ -23,11 +23,9 @@ header {
   box-shadow: 0 2px 12px rgba(0,0,0,0.18) !important;
   pointer-events: auto !important;
 }
-/* 背景地図を落ち着かせて、六角形を主役にする */
+/* 背景地図だけ落ち着かせて、六角形を主役にする（Leaflet tileに basemap が付く） */
 .leaflet-tile.basemap {
-  filter: grayscale(1) brightness(1.12) contrast(0.92) saturate(0.65);
+  filter: grayscale(1) brightness(1.10) contrast(0.85) saturate(0.35);
+  opacity: 0.95;
 }
-/* 背景地図（タイル）だけを少し落ち着かせる：六角形は影響しない */
-.leaflet-tile-pane {
-  filter: grayscale(0.75) brightness(1.05) contrast(0.9);
-}
+
